@@ -1,9 +1,15 @@
+//Module imports
 var express = require('express')
+var path = require('path')
+
+//constant declarations
+const mainPage = "index.html";
+
 var app = express();
 app.use(express.static('frontend'))
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
-    response.send("Homepage reached")
+    response.sendFile(path.resolve(`../frontend/${mainPage}`))
 })
 app.post('/new_notice',(request,response)=>{
     console.log("POST REQUEST RECEIVED")
