@@ -14,6 +14,7 @@ app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
     response.sendFile(path.resolve(`../frontend/${mainPage}`))
 })
+app.get('/get/*')
 app.post('/new_notice',urlencodedParser,(request,response)=>{
     console.log("POST REQUEST RECEIVED")
     var priorityClass = '';

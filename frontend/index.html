@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <title>Notice Board</title>
+        <link rel ="stylesheet" href = "main.css">
+    </head>
+    <body>
+        <div id = "notice">
+            <h1>{{header}}</h1>
+        </div>
+        <form action = "http://localhost:8081/new_notice" method = "POST">
+            Notice Name: <input type = "text" name = "noticeName">  <br>
+            Due Date: <input type = "text" name = "dueDate">   <br>
+            Priority:  <br>
+                High <input type = "radio" name = "hPriority">
+                Medium <input type = "radio" name = "mPriority">
+                Low <input type = "radio" name = "lPriority">   <br>
+            <input type = "submit" value = "Submit">
+         </form>
+    </body>
+</html>
