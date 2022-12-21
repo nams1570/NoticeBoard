@@ -2,6 +2,7 @@
 var express = require('express')
 var path = require('path')
 var bodyParser = require('body-parser')
+var noticeClass = require('./models/notice.js')
 
 //constant declarations
 const mainPage = "index.html";
@@ -29,13 +30,12 @@ app.post('/new_notice',urlencodedParser,(request,response)=>{
     else{
         priorityClass = 'low';
     }
-    newNotice= {
-        noticeName : request.body.noticeName,
-        dueDate    : request.body.dueDate,
-        priority   : priorityClass
-    };
+    newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,priorityClass);
+    console.log(newNotice);
     response.send(JSON.stringify(newNotice))
 })
+
+
 var server = app.listen(8081,()=>{
     var host = server.address().address;
     var port = server.address().port;
