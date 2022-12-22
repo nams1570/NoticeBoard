@@ -18,7 +18,19 @@ app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
     response.sendFile(path.resolve(`../frontend/${mainPage}`))
 })
-
+app.get('/get/:nname',(request,response)=>{
+    console.log(`Get request for notice ${request.params.nname} found.`)
+    var foundNotice =noticeList.toArray().find(notice=>notice.noticeName === request.params.nname);
+    console.log(foundNotice)
+    if(foundNotice)
+    {
+        response.send(JSON.stringify(foundNotice))
+    }
+    else
+    {
+        response.status(500).send('No such notice!')
+    }
+})
 app.post('/new_notice',urlencodedParser,(request,response)=>{
     console.log("POST REQUEST RECEIVED")
     var priorityClass = '';
