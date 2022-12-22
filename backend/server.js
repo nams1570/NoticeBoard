@@ -31,7 +31,7 @@ app.get('/get/:nname',(request,response)=>{
         response.status(500).send('No such notice!')
     }
 })
-app.post('/new_notice',urlencodedParser,(request,response)=>{
+app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
     var priorityClass = '';
     if(request.body.hPriority == 'on')
@@ -52,7 +52,7 @@ app.post('/new_notice',urlencodedParser,(request,response)=>{
         if(err)
         {
             console.log("Error writing JSON object to file.")
-            return console.log(err)
+            next(err)
         }
         console.log("List of notices updated")
     })
