@@ -13,7 +13,7 @@ var app = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
 
-app.use(express.static('frontend'))
+app.use(express.static(path.resolve(`../frontend`)))
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
     response.sendFile(path.resolve(`../frontend/${mainPage}`))
@@ -58,7 +58,19 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     })
     response.send(JSON.stringify(newNotice))
 })
-
+app.delete('/del/:nname',(request,response,next)=>{
+    console.log(`Delete request received for ${request.params.nname}`);
+    noticeList.delete(notice=>notice.noticeName === request.params.nname);
+    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
+        if(err)
+        {
+            console.log("Error writing JSON object to file.")
+            next(err)
+        }
+        console.log("List of notices updated")
+    })
+    response.send("Deleted successfully!")
+})
 
 var server = app.listen(8081,()=>{
     var host = server.address().address;
