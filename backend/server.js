@@ -3,19 +3,22 @@ var express = require('express')
 var path = require('path')
 var bodyParser = require('body-parser')
 var noticeClass = require('./models/notice.js')
+var List = require("collections/list");
+var fs = require('fs')
 
 //constant declarations
 const mainPage = "index.html";
 
 var app = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var noticeList = new List([]);
 
 app.use(express.static('frontend'))
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
     response.sendFile(path.resolve(`../frontend/${mainPage}`))
 })
-app.get('/get/*')
+
 app.post('/new_notice',urlencodedParser,(request,response)=>{
     console.log("POST REQUEST RECEIVED")
     var priorityClass = '';
@@ -32,6 +35,15 @@ app.post('/new_notice',urlencodedParser,(request,response)=>{
     }
     newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,priorityClass);
     console.log(newNotice);
+    noticeList.push(newNotice);
+    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
+        if(err)
+        {
+            console.log("Error writing JSON object to file.")
+            return console.log(err)
+        }
+        console.log("List of notices updated")
+    })
     response.send(JSON.stringify(newNotice))
 })
 
