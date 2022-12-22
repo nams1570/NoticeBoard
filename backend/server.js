@@ -60,7 +60,7 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
 })
 app.delete('/del/:nname',(request,response,next)=>{
     console.log(`Delete request received for ${request.params.nname}`);
-    noticeList.delete(notice=>notice.noticeName === request.params.nname);
+    noticeList = new List(noticeList.toArray().filter(notice=>notice.noticeName != request.params.nname));
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
         if(err)
         {
