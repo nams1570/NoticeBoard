@@ -11,7 +11,7 @@ const mainPage = "index.html";
 
 var app = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var noticeList = new List([]);
+var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
 
 app.use(express.static('frontend'))
 app.get('/',(request,response)=>{
