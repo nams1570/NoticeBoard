@@ -15,13 +15,12 @@
         </div>
       </div>
     </section>
-    <section class = "board section">
       <div class = "board">
+        <div class = "notice">
+        Hello This is a note. Please enjoy it
       </div>
-      <div class = "notice">
-        Hello
       </div>
-    </section>
+      
   </div>
 
 </template>
@@ -43,17 +42,29 @@
   .board
   {
     background-image: url('../assets/corkboard.jpg');
-    background-size: 800px 400px;
     background-position: center;
+    position:fixed;
     background-repeat: no-repeat;
     height: 500px;
+    top:40%;
+    width:50%;
+    right: 20%;
+    border: 1px solid green;
+    z-index: 1;
   }
   .notice
   {
     background-image: url('../assets/NotePic(CAman).png');
-    background-size: 100px 100px;
+    background-size: 200px 200px;
     background-position:center;
     background-repeat: no-repeat;
+    border: 1px solid red;
+    left: 20%;
+    top: 5%;
+    width: 20%;
+    height: 150px;
+    position:absolute;
+    z-index: 2;
   }
   .hero-body .title {
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
