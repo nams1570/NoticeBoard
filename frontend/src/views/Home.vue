@@ -16,9 +16,9 @@
       </div>
     </section>
       <div class = "board">
-        <div class = "notice">
+        <canvas class = "notice">
         Hello This is a note. Please enjoy it
-      </div>
+        </canvas>
       </div>
       
   </div>
@@ -43,6 +43,7 @@
   {
     background-image: url('../assets/corkboard.jpg');
     background-position: center;
+    background-size:cover;
     position:fixed;
     background-repeat: no-repeat;
     height: 500px;
