@@ -9,5 +9,13 @@ export default {
   async getNotice(nname) {
     let res = await axios.get("http://localhost:8081/get/" + nname);
     return res.data;
+  },
+  async postNotice(){
+    let res = await axios.post("http://localhost:8081/new_notice",{
+      noticeName:"test",
+      dueDate:"6/9/12",
+      priority:"high",
+    })
+    return res
   }
 }

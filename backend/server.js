@@ -16,6 +16,7 @@ var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
 
 //app.use(express.static(path.resolve(`../frontend`)))
 app.use(cors());
+app.use(bodyParser.json())
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
     response.sendFile(path.resolve(`./noticeBoard.json`))

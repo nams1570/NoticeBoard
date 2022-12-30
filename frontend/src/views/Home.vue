@@ -8,8 +8,8 @@
             Make sure you check out our upcoming events below
           </h2>
           <div class="button-block">
-            <button class="button is-xl is-dark">
-              Sign Up to Browse Events
+            <button class="button is-xl is-dark" @click="addNotice">
+              Submit a new Notice!
             </button>
           </div>
         </div>
@@ -21,9 +21,15 @@
 </template>
 <script>
 import EventsList from '../components/EventsList.vue';
+import NoticeService from '@/services/NoticeService';
   export default {
     name: 'home',
     components: {EventsList},
+    methods:{
+      addNotice(){
+        NoticeService.postNotice().then();
+      }
+    }
   };
 </script>
 <style lang="scss" scoped>
