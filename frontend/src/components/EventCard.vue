@@ -4,7 +4,7 @@
       <div class="card-content">
         <h2 class="is-size-4 has-text-weight-bold">{{notice.noticeName}}</h2>
         <small class="event-date">{{notice.dueDate}}</small>
-        <span>Priority: {{ notice.priority }}</span>
+        <span><strong>Priority: </strong> {{ notice.priority }}</span>
       </div>
     </div>
   </div>

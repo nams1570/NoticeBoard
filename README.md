@@ -14,3 +14,9 @@ Each notice just stores a description of the job and due date.
 node.js server to handle http requests.
 Want to set it up so that post requests sent to the backend will create new notices and the get requests will display notices.
 Currently, notices are stored persistently in JSON file. Need to switch that over to a database.
+
+### How to run:
+clone repo locally.
+Then cd backend, and run `npm start` to start the backend server.
+cd frontend, and run `npm run serve` to start hosting the service as a whole.
+
