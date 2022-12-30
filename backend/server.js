@@ -37,7 +37,7 @@ app.get('/get/:nname',(request,response)=>{
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
     var priorityClass = '';
-    if(request.body.hPriority == 'on')
+    /*if(request.body.hPriority == 'on')
     {
         priorityClass = 'high';
     }
@@ -47,8 +47,8 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     }
     else{
         priorityClass = 'low';
-    }
-    newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,priorityClass);
+    } */
+    newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,request.body.priority);
     console.log(newNotice);
     noticeList.push(newNotice);
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{

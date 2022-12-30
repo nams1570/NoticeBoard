@@ -3,14 +3,16 @@
     <section class="hero is-dark">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">Welcome to the Animal Rescue League</h1>
+          <h1 class="title">Welcome to your NoticeBoard</h1>
           <h2 class="subtitle">
             Make sure you check out our upcoming events below
           </h2>
           <div class="button-block">
-            <button class="button is-xl is-dark" @click="addNotice">
-              Submit a new Notice!
-            </button>
+              <router-link :to="'/addNotice'">
+                <button class="button is-xl is-dark">
+                  Submit a new Notice!
+                </button>
+              </router-link>
           </div>
         </div>
       </div>
@@ -21,15 +23,10 @@
 </template>
 <script>
 import EventsList from '../components/EventsList.vue';
-import NoticeService from '@/services/NoticeService';
   export default {
     name: 'home',
     components: {EventsList},
-    methods:{
-      addNotice(){
-        NoticeService.postNotice().then();
-      }
-    }
+    
   };
 </script>
 <style lang="scss" scoped>

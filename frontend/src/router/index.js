@@ -19,6 +19,11 @@ const routes = [
     path: '/notices/:nname',
     name: 'eventSingle',
     component: ()=>import('../views/EventSingle.vue')
+  },
+  {
+    path: '/addNotice',
+    name: 'newNotice',
+    component: ()=> import('../views/NewNotice.vue')
   }
 ]
 
