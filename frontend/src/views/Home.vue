@@ -15,19 +15,15 @@
         </div>
       </div>
     </section>
-      <div class = "board">
-        <canvas class = "notice">
-        Hello This is a note. Please enjoy it
-        </canvas>
-      </div>
+    <EventsList />
       
   </div>
-
 </template>
 <script>
+import EventsList from '../components/EventsList.vue';
   export default {
     name: 'home',
-    components: {},
+    components: {EventsList},
   };
 </script>
 <style lang="scss" scoped>
@@ -56,7 +52,7 @@
   .notice
   {
     background-image: url('../assets/NotePic(CAman).png');
-    background-size: 200px 200px;
+    background-size: cover;
     background-position:center;
     background-repeat: no-repeat;
     border: 1px solid red;

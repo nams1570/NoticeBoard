@@ -5,18 +5,20 @@ var bodyParser = require('body-parser')
 var noticeClass = require('./models/notice.js')
 var List = require("collections/list");
 var fs = require('fs')
+const cors = require('cors');
 
 //constant declarations
 const mainPage = "index.html";
 
 var app = express();
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({ extended: true })
 var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
 
-app.use(express.static(path.resolve(`../frontend`)))
+//app.use(express.static(path.resolve(`../frontend`)))
+app.use(cors());
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
-    response.sendFile(path.resolve(`../frontend/${mainPage}`))
+    response.sendFile(path.resolve(`./noticeBoard.json`))
 })
 app.get('/get/:nname',(request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
