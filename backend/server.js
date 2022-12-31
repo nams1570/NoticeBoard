@@ -51,6 +51,7 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     } */
     newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,request.body.priority);
     console.log(newNotice);
+    newNotice.setDescription(request.body.description);
     noticeList.push(newNotice);
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
         if(err)
