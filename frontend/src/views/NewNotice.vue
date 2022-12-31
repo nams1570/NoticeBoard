@@ -12,6 +12,10 @@
             Enter the priority! <br>
             <input :value = "Priority" @input="onInputPriority" placeholder ="text here!">
         </div><br>
+        <div class = "enter-description"> 
+            Enter a short description <br>
+            <input :value = "description" @input="onInputDesc" placeholder ="text here!">
+        </div><br>
         <router-link :to="'/'">
         <button @click="addNotice">
             Submit a notice here!
@@ -26,7 +30,8 @@ export default{
         return{
             noticeName: '',
             dueDate: '',
-            Priority:''
+            Priority:'',
+            description:''
         }
     },
     methods:{
@@ -39,10 +44,13 @@ export default{
     onInputPriority(e) {
       this.Priority = e.target.value
     },
+    onInputDesc(e) {
+      this.description = e.target.value
+    },
       addNotice(){
         NoticeService.postNotice({noticeName:this.noticeName,
             dueDate:this.dueDate,
-        priority:this.Priority}).then();
+        priority:this.Priority,description:this.description}).then();
       }
     }
 }

@@ -10,9 +10,10 @@
       </section>
       <section class="event-content">
         <div class="container">
-          <p class="is-size-4 description">Notice description</p>
+          <h2>Notice Description:</h2><br>
+          <p class="is-size-4 description">{{ this.$data.notice.description }}</p> <br>
+
           <div class="event-images columns is-multiline has-text-centered">
-            <div class="column is-one-third">IMAGE PLACEHOLDER</div>
           </div>
         </div>
       </section>
