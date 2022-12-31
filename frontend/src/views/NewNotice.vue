@@ -6,7 +6,7 @@
         </div><br>
         <div class = "enter-due-date"> 
             Enter the due date! <br>
-            <input :value = "dueDate" @input="onInputDueDate" placeholder ="text here!">
+            <input type="date" :value = "dueDate" @input="onInputDueDate" placeholder ="text here!">
         </div><br>
         <div class = "enter-priority"> 
             Enter the priority! <br>
