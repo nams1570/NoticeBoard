@@ -56,5 +56,12 @@
       margin-top: 100px;
       text-align: center;
     }
+    .delete-button{
+      height:20px;
+      width:20px;
+      background: url("../assets/deleteImage.png");
+      background-position: center;
+      background-size: cover;
+    }
     
   </style>
