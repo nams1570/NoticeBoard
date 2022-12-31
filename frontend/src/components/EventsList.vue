@@ -62,6 +62,7 @@
       background: url("../assets/deleteImage.png");
       background-position: center;
       background-size: cover;
+      cursor:pointer;
     }
     
   </style>
