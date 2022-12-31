@@ -13,5 +13,9 @@ export default {
   async postNotice(notice){
     let res = await axios.post("http://localhost:8081/new_notice",notice);
     return res
+  },
+  async delNotice(nname){
+    let res = await axios.delete("http://localhost:8081/del/"+nname);
+    return res
   }
 }

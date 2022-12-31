@@ -14,6 +14,7 @@ var app = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
 
+
 //app.use(express.static(path.resolve(`../frontend`)))
 app.use(cors());
 app.use(bodyParser.json())

@@ -8,6 +8,7 @@
             :key = "notice.noticeName"
             class="column is-one-quarter">
             {{ notice.noticeName }}
+            <button class = "delete-button" @click.once="deleteNotice(notice.noticeName)"></button>
           <router-link :to="'/notices/' + notice.noticeName">
             <EventCard :notice="notice"/>
             </router-link>
@@ -30,6 +31,9 @@
         this.getNoticeData();
       },
       methods:{
+        deleteNotice(noticeName){
+          NoticeService.delNotice(noticeName).then();
+        },
         async getNoticeData(){
             var vm = this;
             NoticeService.getAllNotices().then((response)=>{
@@ -52,4 +56,5 @@
       margin-top: 100px;
       text-align: center;
     }
+    
   </style>
