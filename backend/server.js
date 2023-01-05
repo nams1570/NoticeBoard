@@ -11,6 +11,8 @@ const cors = require('cors');
 const mainPage = "index.html";
 
 var app = express();
+var dateTime = new Date();
+console.log(dateTime);
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
 
@@ -20,6 +22,7 @@ app.use(cors());
 app.use(bodyParser.json())
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
+    console.log(dateTime);
     response.sendFile(path.resolve(`./noticeBoard.json`))
 })
 app.get('/get/:nname',(request,response)=>{
@@ -38,20 +41,11 @@ app.get('/get/:nname',(request,response)=>{
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
     var priorityClass = '';
-    /*if(request.body.hPriority == 'on')
-    {
-        priorityClass = 'high';
-    }
-    else if(request.body.mPriority == 'on')
-    {
-        priorityClass = 'medium';
-    }
-    else{
-        priorityClass = 'low';
-    } */
     newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,request.body.priority);
     console.log(newNotice);
     newNotice.setDescription(request.body.description);
+    newNotice.setDueClass(dateTime);
+    //Check date, compare it?
     noticeList.push(newNotice);
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
         if(err)
