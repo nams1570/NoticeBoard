@@ -29,8 +29,14 @@
       },
       created(){
         this.getNoticeData();
+        //put request
+        //this.updateDueClass();
       },
       methods:{
+        /*updateDueClass()
+        {
+
+        },*/
         deleteNotice(noticeName){
           NoticeService.delNotice(noticeName).then();
         },

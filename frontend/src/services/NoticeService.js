@@ -17,5 +17,9 @@ export default {
   async delNotice(nname){
     let res = await axios.delete("http://localhost:8081/del/"+nname);
     return res
-  }
+  },
+  /*async updateDueClass(notice)
+  {
+    let res = await axios.put(,notice)
+  }*/
 }

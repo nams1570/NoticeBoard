@@ -14,8 +14,7 @@ var app = express();
 var dateTime = new Date();
 console.log(dateTime);
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
-var noticeList = new List(JSON.parse(fs.readFileSync('noticeBoard.json')));
-
+var noticeList = JSON.parse(fs.readFileSync('noticeBoard.json'));
 
 //app.use(express.static(path.resolve(`../frontend`)))
 app.use(cors());
@@ -27,7 +26,7 @@ app.get('/',(request,response)=>{
 })
 app.get('/get/:nname',(request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
-    var foundNotice =noticeList.toArray().find(notice=>notice.noticeName === request.params.nname);
+    var foundNotice =noticeList.find(notice=>notice.noticeName === request.params.nname);
     console.log(foundNotice)
     if(foundNotice)
     {
@@ -37,6 +36,17 @@ app.get('/get/:nname',(request,response)=>{
     {
         response.status(500).send('No such notice!')
     }
+})
+app.put('/updateTime/:nname',(request,response)=>{
+
+    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
+        if(err)
+        {
+            console.log("Error writing JSON object to file.")
+            next(err)
+        }
+        console.log("List of notices updated")
+    })
 })
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
@@ -59,7 +69,7 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
 })
 app.delete('/del/:nname',(request,response,next)=>{
     console.log(`Delete request received for ${request.params.nname}`);
-    noticeList = new List(noticeList.toArray().filter(notice=>notice.noticeName != request.params.nname));
+    noticeList = noticeList.filter(notice=>notice.noticeName != request.params.nname);
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
         if(err)
         {
