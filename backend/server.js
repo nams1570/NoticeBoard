@@ -37,8 +37,11 @@ app.get('/get/:nname',(request,response)=>{
         response.status(500).send('No such notice!')
     }
 })
-app.put('/updateTime/:nname',(request,response)=>{
-
+app.put('/updateTime',(request,response)=>{
+    objIndex = noticeList.findIndex(notice=>notice.noticeName===request.body.noticeName)
+    updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
+    updatedNotice.setDueClass(dateTime);
+    noticeList[objIndex] = updatedNotice;
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
         if(err)
         {
@@ -50,7 +53,6 @@ app.put('/updateTime/:nname',(request,response)=>{
 })
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
-    var priorityClass = '';
     newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,request.body.priority);
     console.log(newNotice);
     newNotice.setDescription(request.body.description);
