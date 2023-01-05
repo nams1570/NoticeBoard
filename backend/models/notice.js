@@ -29,7 +29,7 @@ class Notice
         }
         else if(dateComparisonScore <=8)
         {
-            this.dueClass = 'Coming week'
+            this.dueClass = 'Coming Week'
         }
         else if(dateComparisonScore <=32)
         {

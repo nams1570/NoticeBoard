@@ -1,9 +1,84 @@
 <template>
     <div class="events container">
-      <h2 class="subtitle is-3">Check out our upcoming events</h2>
+      <h2 class="subtitle is-3">Check out all upcoming notices</h2>
       <div class="columns is-multiline">
         <div 
             v-for="notice in notices"
+            :notice = "notice"
+            :key = "notice.noticeName"
+            class="column is-one-quarter">
+            {{ notice.noticeName }}
+            {{ notice.dueClass }}
+            <button class = "delete-button" @click.once="deleteNotice(notice.noticeName)"></button>
+          <router-link :to="'/notices/' + notice.noticeName">
+            <EventCard :notice="notice"/>
+            </router-link>
+        </div>
+      </div>
+      <h2 class="subtitle is-3">Notices due Today:</h2>
+      <div class="columns is-multiline">
+        <div 
+            v-for="notice in todayNotices"
+            :notice = "notice"
+            :key = "notice.noticeName"
+            class="column is-one-quarter">
+            {{ notice.noticeName }}
+            {{ notice.dueClass }}
+            <button class = "delete-button" @click.once="deleteNotice(notice.noticeName)"></button>
+          <router-link :to="'/notices/' + notice.noticeName">
+            <EventCard :notice="notice"/>
+            </router-link>
+        </div>
+      </div>
+      <h2 class="subtitle is-3">Notices due next week:</h2>
+      <div class="columns is-multiline">
+        <div 
+            v-for="notice in nextWeekNotices"
+            :notice = "notice"
+            :key = "notice.noticeName"
+            class="column is-one-quarter">
+            {{ notice.noticeName }}
+            {{ notice.dueClass }}
+            <button class = "delete-button" @click.once="deleteNotice(notice.noticeName)"></button>
+          <router-link :to="'/notices/' + notice.noticeName">
+            <EventCard :notice="notice"/>
+            </router-link>
+        </div>
+      </div>
+      <h2 class="subtitle is-3">Notices due next month:</h2>
+      <div class="columns is-multiline">
+        <div 
+            v-for="notice in nextMonthNotices"
+            :notice = "notice"
+            :key = "notice.noticeName"
+            class="column is-one-quarter">
+            {{ notice.noticeName }}
+            {{ notice.dueClass }}
+            <button class = "delete-button" @click.once="deleteNotice(notice.noticeName)"></button>
+          <router-link :to="'/notices/' + notice.noticeName">
+            <EventCard :notice="notice"/>
+            </router-link>
+        </div>
+      </div>
+      <h2 class="subtitle is-3">Notices due beyond that period:</h2>
+      <div class="columns is-multiline">
+        <div 
+            v-for="notice in beyondNotices"
+            :notice = "notice"
+            :key = "notice.noticeName"
+            class="column is-one-quarter">
+            {{ notice.noticeName }}
+            {{ notice.dueClass }}
+            <button class = "delete-button" @click.once="deleteNotice(notice.noticeName)"></button>
+          <router-link :to="'/notices/' + notice.noticeName">
+            <EventCard :notice="notice"/>
+            </router-link>
+        </div>
+      </div>
+      <h2 class="subtitle is-3">Notices that have already passed:</h2>
+      <div class="columns is-multiline">
+        <div 
+            v-for="notice in backlogNotices"
             :notice = "notice"
             :key = "notice.noticeName"
             class="column is-one-quarter">
@@ -32,6 +107,28 @@
         //put request
         this.updateAllDueClass();
         this.getNoticeData();
+      },
+      computed:{
+        backlogNotices()
+        {
+          return this.notices.filter(notice=>notice.dueClass === "Backlog");
+        },
+        todayNotices()
+        {
+          return this.notices.filter(notice=>notice.dueClass === "Today");
+        },
+        nextWeekNotices()
+        {
+          return this.notices.filter(notice=>notice.dueClass === "Coming Week");
+        },
+        nextMonthNotices()
+        {
+          return this.notices.filter(notice=>notice.dueClass === "Coming Month");
+        },
+        beyondNotices()
+        {
+          return this.notices.filter(notice=>notice.dueClass === "Beyond");
+        },
       },
       methods:{
         updateAllDueClass()
