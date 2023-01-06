@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.get('/',(request,response)=>{
     console.log("Get request to homepage received.")
     console.log(dateTime);
-    response.sendFile(path.resolve(`./noticeBoard.json`))
+    response.status(200).sendFile(path.resolve(`./noticeBoard.json`))
 })
 app.get('/get/:nname',(request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
@@ -42,7 +42,11 @@ app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     console.log("Displaying notice is "+JSON.stringify(updatedNotice))
     updatedNotice.setDueClass(dateTime);
+    updatedNotice.setDescription(request.body.description)
+    console.log("NoticeList is"+noticeList)
     noticeList[objIndex] = updatedNotice;
+    console.log("Now NoticeList is"+noticeList)
+
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
         if(err)
         {
@@ -51,6 +55,8 @@ app.put('/updateTime',(request,response)=>{
         }
         console.log("List of notices updated")
     })
+    response.status(200).send("Notice updated successfully!")
+    console.log("Hello this is done")
 })
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
