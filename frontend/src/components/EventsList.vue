@@ -103,10 +103,12 @@
             notices:[]
         }
       },
-      created(){
+      created:async function(){
         //put request
-        this.updateAllDueClass();
-        this.getNoticeData();
+        await this.getNoticeData();
+        console.log("notices length"+this.notices.length)
+        await this.updateAllDueClass();
+        console.log("Banana")
       },
       computed:{
         backlogNotices()
@@ -131,12 +133,20 @@
         },
       },
       methods:{
-        updateAllDueClass()
+        async updateAllDueClass()
         {
-          for(var notice in this.notices)
+          try
           {
-            console.log("Notice is"+{notice})
-            NoticeService.updateDueClass(notice);
+            console.log("Hello!"+this.notices.length)
+            this.notices.forEach(notice=>
+            {
+              console.log("Notice is"+{notice})
+              NoticeService.updateDueClass(notice);
+            })
+          }
+          catch(err) 
+          {
+            console.log(err)
           }
         },
         deleteNotice(noticeName){
@@ -144,13 +154,8 @@
         },
         async getNoticeData(){
             var vm = this;
-            NoticeService.getAllNotices().then((response)=>{
-                console.log(response);
-                response.forEach(element=>{
-                    console.log(element)
-                    vm.notices.push(element)
-                })
-            })
+            this.notices= await NoticeService.getAllNotices()
+          
             console.log('notices is now'+ JSON.stringify(vm.notices));
         }
       },

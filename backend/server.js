@@ -40,6 +40,7 @@ app.get('/get/:nname',(request,response)=>{
 app.put('/updateTime',(request,response)=>{
     objIndex = noticeList.findIndex(notice=>notice.noticeName===request.body.noticeName)
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
+    console.log("Displaying notice is "+JSON.stringify(updatedNotice))
     updatedNotice.setDueClass(dateTime);
     noticeList[objIndex] = updatedNotice;
     fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{

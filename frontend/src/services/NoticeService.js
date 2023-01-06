@@ -3,7 +3,7 @@ import axios from "axios"
 export default {
   async getAllNotices() {
     let res = await axios.get("http://localhost:8081/");
-    console.log(res.data);
+    console.log("This is"+res.data);
     return res.data;
   },
   async getNotice(nname) {
@@ -20,6 +20,7 @@ export default {
   },
   async updateDueClass(notice)
   {
+    console.log("Notice Service receives"+JSON.stringify(notice))
     let res = await axios.put("http://localhost:8081/updateTime",notice)
     return res
   }
