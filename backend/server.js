@@ -6,31 +6,59 @@ var noticeClass = require('./models/notice.js')
 var List = require("collections/list");
 var fs = require('fs')
 const cors = require('cors');
+var mysql = require('mysql');
+require('dotenv').config()
 
 //constant declarations
-const mainPage = "index.html";
 
 var app = express();
-var dateTime = new Date();
-console.log(dateTime);
-var urlencodedParser = bodyParser.urlencoded({ extended: true })
-var noticeList = JSON.parse(fs.readFileSync('noticeBoard.json'));
+var con = mysql.createConnection({
+    host: "localhost",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: "notices"
+  });
 
-//app.use(express.static(path.resolve(`../frontend`)))
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    });
+var dateTime = new Date();
+var urlencodedParser = bodyParser.urlencoded({ extended: true })
+var sql = "SELECT * FROM noticeList"
+
+async function make_sql_query(con,sql)
+{
+        let pro = new Promise(function(resolve,reject){
+        con.query(sql, function (err, result) {
+          if(err) throw err
+            console.log("Result: " + JSON.stringify(result));
+            resolve(result);
+          
+        });
+    });
+    return pro.then((val)=>{
+        return val
+    })
+}
+
+
+
 app.use(cors());
 app.use(bodyParser.json())
-app.get('/',(request,response)=>{
+app.get('/',async (request,response)=>{
     console.log("Get request to homepage received.")
     console.log(dateTime);
-    response.status(200).sendFile(path.resolve(`./noticeBoard.json`))
+    response.status(200).send(await make_sql_query(con,"SELECT * FROM noticeList"));
 })
-app.get('/get/:nname',(request,response)=>{
+app.get('/get/:nname',async (request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
-    var foundNotice =noticeList.find(notice=>notice.noticeName === request.params.nname);
-    console.log(foundNotice)
-    if(foundNotice)
+    var sql = `SELECT * FROM noticeList WHERE noticeName = '${request.params.nname}'`
+    var foundNotices = await make_sql_query(con,sql);
+    console.log(foundNotices)
+    if(foundNotices)
     {
-        response.send(JSON.stringify(foundNotice))
+        response.send(foundNotices[0])
     }
     else
     {
@@ -38,25 +66,12 @@ app.get('/get/:nname',(request,response)=>{
     }
 })
 app.put('/updateTime',(request,response)=>{
-    objIndex = noticeList.findIndex(notice=>notice.noticeName===request.body.noticeName)
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     console.log("Displaying notice is "+JSON.stringify(updatedNotice))
     updatedNotice.setDueClass(dateTime);
-    updatedNotice.setDescription(request.body.description)
-    console.log("NoticeList is"+noticeList)
-    noticeList[objIndex] = updatedNotice;
-    console.log("Now NoticeList is"+noticeList)
-
-    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
-        if(err)
-        {
-            console.log("Error writing JSON object to file.")
-            next(err)
-        }
-        console.log("List of notices updated")
-    })
+    var sql = `UPDATE noticeList SET dueClass = '${updatedNotice.dueClass}' WHERE noticeName = '${updatedNotice.noticeName}'`
+    make_sql_query(con,sql);
     response.status(200).send("Notice updated successfully!")
-    console.log("Hello this is done")
 })
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
@@ -65,28 +80,14 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     newNotice.setDescription(request.body.description);
     newNotice.setDueClass(dateTime);
     //Check date, compare it?
-    noticeList.push(newNotice);
-    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
-        if(err)
-        {
-            console.log("Error writing JSON object to file.")
-            next(err)
-        }
-        console.log("List of notices updated")
-    })
+    var sql = `INSERT INTO noticeList (noticeName,dueDate,priority,description,dueClass) VALUES ('${newNotice.noticeName}','${newNotice.dueDate}','${newNotice.priority}','${newNotice.description}','${newNotice.dueClass}')`
+    make_sql_query(con,sql);
     response.send(JSON.stringify(newNotice))
 })
 app.delete('/del/:nname',(request,response,next)=>{
     console.log(`Delete request received for ${request.params.nname}`);
-    noticeList = noticeList.filter(notice=>notice.noticeName != request.params.nname);
-    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
-        if(err)
-        {
-            console.log("Error writing JSON object to file.")
-            next(err)
-        }
-        console.log("List of notices updated")
-    })
+    var sql = `DELETE FROM noticeList WHERE noticeName = '${request.params.nname}'`
+    make_sql_query(con,sql)
     response.send("Deleted successfully!")
 })
 
