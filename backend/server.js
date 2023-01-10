@@ -99,15 +99,8 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
 })
 app.delete('/del/:nname',(request,response,next)=>{
     console.log(`Delete request received for ${request.params.nname}`);
-    noticeList = noticeList.filter(notice=>notice.noticeName != request.params.nname);
-    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
-        if(err)
-        {
-            console.log("Error writing JSON object to file.")
-            next(err)
-        }
-        console.log("List of notices updated")
-    })
+    var sql = `DELETE FROM noticeList WHERE noticeName = '${request.params.nname}'`
+    make_sql_query(con,sql)
     response.send("Deleted successfully!")
 })
 
