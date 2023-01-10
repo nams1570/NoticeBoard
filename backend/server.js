@@ -66,25 +66,12 @@ app.get('/get/:nname',async (request,response)=>{
     }
 })
 app.put('/updateTime',(request,response)=>{
-    objIndex = noticeList.findIndex(notice=>notice.noticeName===request.body.noticeName)
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     console.log("Displaying notice is "+JSON.stringify(updatedNotice))
     updatedNotice.setDueClass(dateTime);
-    updatedNotice.setDescription(request.body.description)
-    console.log("NoticeList is"+noticeList)
-    noticeList[objIndex] = updatedNotice;
-    console.log("Now NoticeList is"+noticeList)
-
-    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
-        if(err)
-        {
-            console.log("Error writing JSON object to file.")
-            next(err)
-        }
-        console.log("List of notices updated")
-    })
+    var sql = `UPDATE noticeList SET dueClass = '${updatedNotice.dueClass}' WHERE noticeName = '${updatedNotice.noticeName}'`
+    make_sql_query(con,sql);
     response.status(200).send("Notice updated successfully!")
-    console.log("Hello this is done")
 })
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
