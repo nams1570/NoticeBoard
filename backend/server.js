@@ -25,9 +25,8 @@ var con = mysql.createConnection({
     });
 var dateTime = new Date();
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
-var noticeList = JSON.parse(fs.readFileSync('noticeBoard.json'));
 var sql = "SELECT * FROM noticeList"
-
+var noticeList = []
 async function make_sql_query(con,sql)
 {
         let pro = new Promise(function(resolve,reject){
@@ -52,13 +51,14 @@ app.get('/',async (request,response)=>{
     console.log(dateTime);
     response.status(200).send(await make_sql_query(con,"SELECT * FROM noticeList"));
 })
-app.get('/get/:nname',(request,response)=>{
+app.get('/get/:nname',async (request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
-    var foundNotice =noticeList.find(notice=>notice.noticeName === request.params.nname);
-    console.log(foundNotice)
-    if(foundNotice)
+    var sql = `SELECT * FROM noticeList WHERE noticeName = '${request.params.nname}'`
+    var foundNotices = await make_sql_query(con,sql);
+    console.log(foundNotices)
+    if(foundNotices)
     {
-        response.send(JSON.stringify(foundNotice))
+        response.send(foundNotices[0])
     }
     else
     {
