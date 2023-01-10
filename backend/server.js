@@ -6,23 +6,51 @@ var noticeClass = require('./models/notice.js')
 var List = require("collections/list");
 var fs = require('fs')
 const cors = require('cors');
+var mysql = require('mysql');
+require('dotenv').config()
 
 //constant declarations
-const mainPage = "index.html";
 
 var app = express();
+var con = mysql.createConnection({
+    host: "localhost",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: "notices"
+  });
+
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    });
 var dateTime = new Date();
-console.log(dateTime);
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 var noticeList = JSON.parse(fs.readFileSync('noticeBoard.json'));
+var sql = "SELECT * FROM noticeList"
 
-//app.use(express.static(path.resolve(`../frontend`)))
+async function make_sql_query(con,sql)
+{
+        let pro = new Promise(function(resolve,reject){
+        con.query(sql, function (err, result) {
+          if(err) throw err
+            console.log("Result: " + JSON.stringify(result));
+            resolve(result);
+          
+        });
+    });
+    return pro.then((val)=>{
+        return val
+    })
+}
+
+
+
 app.use(cors());
 app.use(bodyParser.json())
-app.get('/',(request,response)=>{
+app.get('/',async (request,response)=>{
     console.log("Get request to homepage received.")
     console.log(dateTime);
-    response.status(200).sendFile(path.resolve(`./noticeBoard.json`))
+    response.status(200).send(await make_sql_query(con,"SELECT * FROM noticeList"));
 })
 app.get('/get/:nname',(request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
