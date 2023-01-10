@@ -1,18 +1,16 @@
 //Module imports
-var express = require('express')
-var path = require('path')
-var bodyParser = require('body-parser')
-var noticeClass = require('./models/notice.js')
-var List = require("collections/list");
-var fs = require('fs')
+const express = require('express')
+const path = require('path')
+const bodyParser = require('body-parser')
+const noticeClass = require('./models/notice.js')
 const cors = require('cors');
-var mysql = require('mysql');
+const mysql = require('mysql');
 require('dotenv').config()
 
 //constant declarations
 
-var app = express();
-var con = mysql.createConnection({
+const app = express();
+const con = mysql.createConnection({
     host: "localhost",
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -25,7 +23,6 @@ var con = mysql.createConnection({
     });
 var dateTime = new Date();
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
-var sql = "SELECT * FROM noticeList"
 
 async function make_sql_query(con,sql)
 {
