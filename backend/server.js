@@ -93,15 +93,8 @@ app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     newNotice.setDescription(request.body.description);
     newNotice.setDueClass(dateTime);
     //Check date, compare it?
-    noticeList.push(newNotice);
-    fs.writeFile("noticeBoard.json",JSON.stringify(noticeList),'utf8',(err)=>{
-        if(err)
-        {
-            console.log("Error writing JSON object to file.")
-            next(err)
-        }
-        console.log("List of notices updated")
-    })
+    var sql = `INSERT INTO noticeList (noticeName,dueDate,priority,description,dueClass) VALUES ('${newNotice.noticeName}','${newNotice.dueDate}','${newNotice.priority}','${newNotice.description}','${newNotice.dueClass}')`
+    make_sql_query(con,sql);
     response.send(JSON.stringify(newNotice))
 })
 app.delete('/del/:nname',(request,response,next)=>{
