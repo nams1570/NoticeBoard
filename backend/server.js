@@ -29,7 +29,6 @@ async function make_sql_query(con,sql)
         let pro = new Promise(function(resolve,reject){
         con.query(sql, function (err, result) {
           if(err) throw err
-            console.log("Result: " + JSON.stringify(result));
             resolve(result);
           
         });
