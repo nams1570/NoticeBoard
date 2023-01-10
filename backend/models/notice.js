@@ -14,12 +14,10 @@ class Notice
     }
     setDueClass(systemDate)
     {
-        console.log(JSON.stringify(this))
-        console.log(systemDate+ ': system date and '+this.dueDate+': dueDate of notice')
         var dueObject = new Date(this.dueDate+'T03:05:00')
         //compare month and day.
         var dateComparisonScore = ((dueObject.getFullYear() - systemDate.getFullYear())*100) + ((dueObject.getMonth()-systemDate.getMonth())*10) + (dueObject.getDate() - systemDate.getDate())
-        console.log("Score is"+dateComparisonScore)
+        
         if(dateComparisonScore <0)
         {
             this.dueClass = 'Backlog'

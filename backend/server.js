@@ -26,7 +26,7 @@ var con = mysql.createConnection({
 var dateTime = new Date();
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 var sql = "SELECT * FROM noticeList"
-var noticeList = []
+
 async function make_sql_query(con,sql)
 {
         let pro = new Promise(function(resolve,reject){
