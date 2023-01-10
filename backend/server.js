@@ -69,7 +69,7 @@ app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     console.log("Displaying notice is "+JSON.stringify(updatedNotice))
     updatedNotice.setDueClass(dateTime);
-    var sql = `UPDATE noticeList SET dueClass = '${updatedNotice.dueClass}' WHERE noticeName = '${updatedNotice.noticeName}'`
+    var sql = `UPDATE noticeList SET dueClass = '${updatedNotice.dueClass}', dueDate = '${updatedNotice.dueDate}' WHERE noticeName = '${updatedNotice.noticeName}'`
     make_sql_query(con,sql);
     response.status(200).send("Notice updated successfully!")
 })
