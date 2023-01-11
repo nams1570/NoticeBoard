@@ -12,7 +12,6 @@
         <div class="container">
           <h2>Notice Description:</h2><br>
           <p class="is-size-4 description">{{ this.$data.notice.description }}</p> <br>
-
           <div class="event-images columns is-multiline has-text-centered">
           </div>
         </div>

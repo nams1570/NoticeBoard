@@ -44,14 +44,12 @@ app.use(cors());
 app.use(bodyParser.json())
 app.get('/',async (request,response)=>{
     console.log("Get request to homepage received.")
-    console.log(dateTime);
     response.status(200).send(await make_sql_query(con,"SELECT * FROM noticeList"));
 })
 app.get('/get/:nname',async (request,response)=>{
     console.log(`Get request for notice ${request.params.nname} found.`)
     var sql = `SELECT * FROM noticeList WHERE noticeName = '${request.params.nname}'`
     var foundNotices = await make_sql_query(con,sql);
-    console.log(foundNotices)
     if(foundNotices)
     {
         response.send(foundNotices[0])
@@ -63,7 +61,6 @@ app.get('/get/:nname',async (request,response)=>{
 })
 app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
-    console.log("Displaying notice is "+JSON.stringify(updatedNotice))
     updatedNotice.setDueClass(dateTime);
     var sql = `UPDATE noticeList SET dueClass = '${updatedNotice.dueClass}', dueDate = '${updatedNotice.dueDate}' WHERE noticeName = '${updatedNotice.noticeName}'`
     make_sql_query(con,sql);
@@ -72,7 +69,6 @@ app.put('/updateTime',(request,response)=>{
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
     newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,request.body.priority);
-    console.log(newNotice);
     newNotice.setDescription(request.body.description);
     newNotice.setDueClass(dateTime);
     //Check date, compare it?

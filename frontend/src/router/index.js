@@ -24,6 +24,11 @@ const routes = [
     path: '/addNotice',
     name: 'newNotice',
     component: ()=> import('../views/NewNotice.vue')
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: ()=> import('../views/SettingsView.vue')
   }
 ]
 

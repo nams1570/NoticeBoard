@@ -22,4 +22,5 @@ cd frontend, and run `npm run serve` to start hosting the service as a whole.
 
 ### Future Plans
 Add OAuth, make it a social media app. Can look up other people's noticeboards and star them. (Notice-me is our version of likes). 
+Settings: Create A Rule Engine.
 
