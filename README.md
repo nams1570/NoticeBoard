@@ -24,3 +24,8 @@ cd frontend, and run `npm run serve` to start hosting the service as a whole.
 Add OAuth, make it a social media app. Can look up other people's noticeboards and star them. (Notice-me is our version of likes). 
 Settings: Create A Rule Engine.
 
+### Current Goals:
+1)Set up OAuth
+2) Make database design to access specific noticeLists based on userID.
+
+
