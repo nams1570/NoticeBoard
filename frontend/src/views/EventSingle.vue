@@ -11,7 +11,11 @@
       <section class="event-content">
         <div class="container">
           <h2>Notice Description:</h2><br>
-          <p class="is-size-4 description">{{ this.$data.notice.description }}</p> <br>
+          <button @click ="editDesc = !editDesc">Edit?</button>
+          <p v-if="editDesc" class="is-size-4 description">{{ this.$data.notice.description }}</p>
+          <div v-else class = "enter-description"> 
+            <input :value = "description" @input="onInputDesc" placeholder ="text here!">
+          </div><br>
           <div class="event-images columns is-multiline has-text-centered">
           </div>
         </div>
@@ -25,7 +29,8 @@
         name:'NoticeSingle',
         data(){
             return{
-                notice:{}
+                notice:{},
+                editDesc:true
             }
         },
         created(){
@@ -42,7 +47,11 @@
             console.log('notice is'+ JSON.stringify(vm.notice));
                 
 
-            }
+            },
+            async onInputDesc(e) {
+            this.notice.description = e.target.value
+            await NoticeService.updateDesc(this.notice)
+    }
         }
     };
   </script>

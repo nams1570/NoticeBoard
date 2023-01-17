@@ -23,5 +23,10 @@ export default {
     console.log("Notice Service receives"+JSON.stringify(notice))
     let res = await axios.put("http://localhost:8081/updateTime",notice)
     return res
+  },
+  async updateDesc(notice)
+  {
+    let res = await axios.put("http://localhost:8081/updateDesc",notice)
+    return res
   }
 }

@@ -66,6 +66,13 @@ app.put('/updateTime',(request,response)=>{
     make_sql_query(con,sql);
     response.status(200).send("Notice updated successfully!")
 })
+app.put('/updateDesc',(request,response)=>{
+    updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
+    updatedNotice.setDescription(request.body.description)
+    var sql = `UPDATE noticeList SET description = '${updatedNotice.description}' WHERE noticeName = '${updatedNotice.noticeName}'`
+    make_sql_query(con,sql);
+    response.status(200).send("Notice updated successfully!")
+})
 app.post('/new_notice',urlencodedParser,(request,response,next)=>{
     console.log("POST REQUEST RECEIVED")
     newNotice= new noticeClass.Notice(request.body.noticeName,request.body.dueDate,request.body.priority);
