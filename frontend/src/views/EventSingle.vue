@@ -11,7 +11,7 @@
       <section class="event-content">
         <div class="container">
           <h2>Notice Description:</h2><br>
-          <button @click ="editDesc = !editDesc">Edit?</button>
+          <button class = "edit-symbol" @click ="editDesc = !editDesc"></button>
           <p v-if="editDesc" class="is-size-4 description">{{ this.$data.notice.description }}</p>
           <div v-else class = "enter-description"> 
             <input :value = "description" @input="onInputDesc" placeholder ="text here!">
@@ -67,5 +67,17 @@
     }
     .description {
       margin-bottom: 30px;
+    }
+    .edit-symbol{
+      height:20px;
+      width:20px;
+      background: url("../assets/editSymbol.png");
+      background-position: center;
+      background-size: cover;
+      cursor:pointer;
+      opacity:1
+    }
+    .edit-symbol:hover{
+      opacity:0.5
     }
   </style>
