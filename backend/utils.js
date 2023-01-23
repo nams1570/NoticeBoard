@@ -14,5 +14,4 @@ const query_params = {
 // the scopes (portion of user's data) we want to access
 const scopes = ['profile', 'email', 'openid'];
   const request_get_auth_code_url = `${google_auth_token_endpoint}?${query_string.stringify(auth_token_params)}&scope=${scopes.join (' ')}`;
-  console.log(request_get_auth_code_url)
 module.exports ={request_get_auth_code_url}

@@ -69,6 +69,9 @@ app.get('/auth',(request,response)=>{
         console.log(error.message)
       }
 })
+app.get(process.env.REDIRECT_URI,(request,response)=>{
+    const authorization_code = request.query.code
+})
 
 app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
