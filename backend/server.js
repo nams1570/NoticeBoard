@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const noticeClass = require('./models/notice.js')
 const cors = require('cors');
 const mysql = require('mysql');
+const utils = require('./utils');
 require('dotenv').config()
 
 //constant declarations
@@ -59,6 +60,16 @@ app.get('/get/:nname',async (request,response)=>{
         response.status(500).send('No such notice!')
     }
 })
+
+app.get('/auth',(request,response)=>{
+    try {
+        response.redirect(utils.request_get_auth_code_url);
+      } catch (error) {
+        response.sendStatus (500);
+        console.log(error.message)
+      }
+})
+
 app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     updatedNotice.setDueClass(dateTime);
