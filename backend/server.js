@@ -69,8 +69,25 @@ app.get('/auth',(request,response)=>{
         console.log(error.message)
       }
 })
-app.get(process.env.REDIRECT_URI,(request,response)=>{
+app.get(process.env.REDIRECT_URI,async (request,response)=>{
     const authorization_code = request.query.code
+    try {
+        // ! get access token using authorization token
+        const auth_response = await utils.get_access_token(authorization_code);
+        console.log ({data: auth_response.data});
+        // get access token from payload
+        const {access_token} = auth_response.data;
+        console.log(`access token is ${access_token}`)
+        const user = await utils.get_profile_data(access_token);
+        const user_data = user.data;
+        response.send(`
+        <h1> welcome ${user_data.name}</h1>
+        <img src="${user_data.picture}" alt="user_image" />
+        `)
+      } catch (error) {
+        console.log(error.message)
+        response.sendStatus (500);
+      }
 })
 
 app.put('/updateTime',(request,response)=>{
