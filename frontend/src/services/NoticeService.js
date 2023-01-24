@@ -28,5 +28,10 @@ export default {
   {
     let res = await axios.put("http://localhost:8081/updateDesc",notice)
     return res
+  },
+  async getProfileData()
+  {
+    let res = await axios.get("http://localhost:8081/auth")
+    return res.data
   }
 }

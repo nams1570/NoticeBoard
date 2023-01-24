@@ -25,7 +25,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-dark">
+              <a v-on:click="requestProfileDetails" class="button is-dark">
                 <strong>Sign In</strong>
               </a>
             </div>
@@ -35,8 +35,15 @@
     </nav>
   </template>
   <script>
+  import NoticeService from "../../services/NoticeService"
     export default {
       name: 'Nav',
+      methods:{
+        async requestProfileDetails()
+        {
+          return await NoticeService.getProfileData();
+        }
+      }
     };
   </script>
   <style lang="scss" scoped>

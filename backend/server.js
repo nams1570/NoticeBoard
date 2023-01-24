@@ -44,7 +44,7 @@ async function make_sql_query(con,sql)
 app.use(cors());
 app.use(bodyParser.json())
 app.get('/',async (request,response)=>{
-    console.log("Get request to homepage received.")
+    //console.log("Get request to homepage received.")
     response.status(200).send(await make_sql_query(con,"SELECT * FROM noticeList"));
 })
 app.get('/get/:nname',async (request,response)=>{
@@ -62,6 +62,7 @@ app.get('/get/:nname',async (request,response)=>{
 })
 
 app.get('/auth',(request,response)=>{
+    console.log("get request for auth found")
     try {
         response.redirect(utils.request_get_auth_code_url);
       } catch (error) {
