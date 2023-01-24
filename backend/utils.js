@@ -1,8 +1,8 @@
 const query_string = require ('querystring');
 const axios = require("axios")
-const google_access_token_endpoint = 'https://oauth2.googleapis.com/token';
 require('dotenv').config()
 
+const google_access_token_endpoint = 'https://oauth2.googleapis.com/token';
 const google_auth_token_endpoint ='https://accounts.google.com/o/oauth2/v2/auth'; //server we are going to have authenticate us
 const query_params = {
   client_id: process.env.CLIENT_ID,
@@ -35,5 +35,5 @@ const query_params = {
 
 // the scopes (portion of user's data) we want to access
 const scopes = ['profile', 'email', 'openid'];
-  const request_get_auth_code_url = `${google_auth_token_endpoint}?${query_string.stringify(auth_token_params)}&scope=${scopes.join (' ')}`;
+const request_get_auth_code_url = `${google_auth_token_endpoint}?${query_string.stringify(auth_token_params)}&scope=${scopes.join (' ')}`;
 module.exports ={request_get_auth_code_url, get_access_token, get_profile_data}
