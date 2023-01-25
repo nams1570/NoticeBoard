@@ -35,13 +35,13 @@
     </nav>
   </template>
   <script>
-  import NoticeService from "../../services/NoticeService"
+  //import AuthService from "../../services/AuthService"
     export default {
       name: 'Nav',
       methods:{
         async requestProfileDetails()
         {
-          return await NoticeService.getProfileData();
+          window.open("http://localhost:8081/auth")
         }
       }
     };

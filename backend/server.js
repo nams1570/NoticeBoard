@@ -73,6 +73,7 @@ app.get('/auth',(request,response)=>{
 app.get(process.env.REDIRECT_URI,async (request,response)=>{
     const authorization_code = request.query.code
     try {
+        console.log("EEE")
         // ! get access token using authorization token
         const auth_response = await utils.get_access_token(authorization_code);
         console.log ({data: auth_response.data});
