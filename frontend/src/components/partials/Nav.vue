@@ -24,14 +24,14 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <div  v-if="isLoggedIn === false" class="buttons">
+            <div  v-if="isLoggedIn !== true" class="buttons">
               <a v-on:click="requestProfileDetails" class="button is-dark">
                 <strong>Sign In</strong>
               </a>
             </div>
             <div class = "profile-display" v-else> 
-              <img :src="result.picture">
-              <h1> {{ result.name }} </h1>
+              <img :src="result?.picture"><br>
+              <strong> {{ result?.name }} </strong>
             </div>
           </div>
         </div>
@@ -61,12 +61,15 @@
         async getProfileDetails()
         {
           this.result = await AuthService.getProfileData()
-          if(this.result != {})
+          console.log("our pre is "+JSON.stringify(this.result))
+          if(JSON.stringify(this.result) != "{}")
           {
+            console.log("Hoi")
             this.isLoggedIn = true;
           }
           else
           {
+            console.log("hei")
             this.isLoggedIn = false;
           }
         }
