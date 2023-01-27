@@ -35,13 +35,28 @@
     </nav>
   </template>
   <script>
-  //import AuthService from "../../services/AuthService"
+  import AuthService from "../../services/AuthService"
     export default {
       name: 'Nav',
+      data(){
+        return{
+          result:''
+        }
+      },
+      created:async function(){
+        await this.getProfileDetails()
+        console.log("Login det"+JSON.stringify(this.result));
+      },
       methods:{
         async requestProfileDetails()
         {
           window.open("http://localhost:8081/auth")
+          
+        },
+        async getProfileDetails()
+        {
+          this.result = await AuthService.getProfileData()
+          console.log(this.result)
         }
       }
     };

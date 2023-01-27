@@ -24,7 +24,7 @@ const con = mysql.createConnection({
     });
 var dateTime = new Date();
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
-
+var cached_user = {};
 async function make_sql_query(con,sql)
 {
         let pro = new Promise(function(resolve,reject){
@@ -82,6 +82,8 @@ app.get(process.env.REDIRECT_URI,async (request,response)=>{
         console.log(`access token is ${access_token}`)
         const user = await utils.get_profile_data(access_token);
         const user_data = user.data;
+        cached_user = {name:user_data.name,picture:user_data.picture};
+        console.log(cached_user)
         response.send(`
         <h1> welcome ${user_data.name}</h1>
         <img src="${user_data.picture}" alt="user_image" />
@@ -91,7 +93,9 @@ app.get(process.env.REDIRECT_URI,async (request,response)=>{
         response.sendStatus (500);
       }
 })
-
+app.get("/cachedProfile",async (request,response)=>{
+    response.send(cached_user);
+})
 app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     updatedNotice.setDueClass(dateTime);
