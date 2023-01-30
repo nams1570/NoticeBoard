@@ -46,7 +46,6 @@
             })
             console.log('notice is'+ JSON.stringify(vm.notice));
                 
-
             },
             async onInputDesc(e) {
             this.notice.description = e.target.value
