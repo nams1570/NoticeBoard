@@ -9,6 +9,7 @@
             </div>
             <div class = "oauth">
                 <h1 class = "text-oauth">Or, you can log in through</h1>
+                <button class = "google-oauth"></button>
             </div>
             <div class = "sign-in">
                 <button>Sign In</button> 
@@ -24,7 +25,6 @@
     background-position: center;
     background-size: cover;
     z-index:1;
-    border: 2px solid green;
 }
 .login-box{
     height:40%;
@@ -38,19 +38,17 @@
     z-index:2;
     position:absolute;
     opacity:0.90;
-    border:2px solid pink;
 }
 .username-password{
     margin-left:30px;
     width:50%;
     margin-top:30px;
-    border: 2px solid green;
     float:left;
 }
 .sign-in{
     margin-left:30px;
     margin-top:15px;
-    border-radius:15px;
+    border-radius:5px;
 }
 .text-link{
     font-style: italic;
@@ -58,7 +56,6 @@
     margin-left: 30px;
 }
 .oauth{
-    border:2px solid red;
     height:50%;
     width:30%;
     margin-left:65%;
@@ -68,5 +65,20 @@
     font-size:smaller;
     color: gray;
     font-style: italic;
+    margin-top:15px;
+}
+.google-oauth{
+    background:url("../assets/google.png");
+    height:30px;
+    width:30px;
+    background-position: center;
+    background-size: cover;
+    cursor:pointer;
+    border:0px;
+    margin-top:20px;
+    margin-left:30%;
+}
+.google-oauth:hover{
+    opacity:0.5;
 }
 </style>
