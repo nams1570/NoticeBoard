@@ -1,20 +1,23 @@
 <template>
     <section class = "login-page">
         <div class = "login-box">
+                <button class = "logo"></button>
             <div class = "username-password"> 
                 <h1>Username:</h1>
-                <input>
+                <input class = "text-input">
                 <h2>Password:</h2>
-                <input>
-            </div>
-            <div class = "oauth">
-                <h1 class = "text-oauth">Or, you can log in through</h1>
-                <button class = "google-oauth"></button>
+                <input class = "text-input">
             </div>
             <div class = "sign-in">
-                <button>Sign In</button> 
+                <button class = "sign-in-button">Sign In</button> 
             </div>
-            <router-link :to="'/signup'" class = "text-link">Don't have an account? Sign up!</router-link>
+            <router-link :to="'/signup'" class = "text-link">Sign up!</router-link>
+            <div class = "oauth text-oauth">
+                <h1 >Or, you can log in through</h1>
+                <button class = "google-oauth"></button> <br>
+                 The Google <a href = "https://policies.google.com/privacy">Privacy Policy </a>and <a href = "https://policies.google.com/terms">Terms of Service</a> apply.
+            </div>
+            
         </div>
     </section>
 </template>
@@ -27,9 +30,9 @@
     z-index:1;
 }
 .login-box{
-    height:40%;
-    width:35%;
-    margin-left:30%;
+    height:53%;
+    width:18%;
+    margin-left:40%;
     margin-right:50%;
     margin-top: 15%;
     background-color: white;
@@ -40,32 +43,47 @@
     opacity:0.90;
 }
 .username-password{
-    margin-left:30px;
+    margin-left:15%;
     width:50%;
-    margin-top:30px;
-    float:left;
 }
 .sign-in{
     margin-left:30px;
-    margin-top:15px;
     border-radius:5px;
+    margin-top:10px;
 }
 .text-link{
     font-style: italic;
     font-size: small;
-    margin-left: 30px;
+    margin-left: 20%;
+}
+.sign-in-button{
+    width:80%;
+    background-color: rgb(109, 103, 103);
+    border:0px;
+    cursor:pointer;
+    border-radius:3px;
+    height:30px;
+    margin-left:5%;
+    color:white;
+}
+.sign-in-button:hover{
+    opacity:0.9;
+}
+.sign-in-button:active{
+    opacity:1;
 }
 .oauth{
-    height:50%;
-    width:30%;
-    margin-left:65%;
+    height:30%;
+    width:65%;
     margin-top:3px;
+    margin-left:30px;
 }
 .text-oauth{
     font-size:smaller;
     color: gray;
     font-style: italic;
     margin-top:15px;
+    margin-left:20%;
 }
 .google-oauth{
     background:url("../assets/google.png");
@@ -75,10 +93,24 @@
     background-size: cover;
     cursor:pointer;
     border:0px;
-    margin-top:20px;
+    margin-top:10px;
     margin-left:30%;
 }
 .google-oauth:hover{
     opacity:0.5;
+}
+
+.text-input{
+    width:140%;
+}
+.logo{
+    background:url("../../public/faviconA.png");
+    background-position: center;
+    background-size: cover;
+    height:55px;
+    width:47px;
+    margin-left:40%;
+    border:0px;
+    margin-top:5px;
 }
 </style>
