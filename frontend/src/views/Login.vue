@@ -9,18 +9,30 @@
                 <input class = "text-input">
             </div>
             <div class = "sign-in">
-                <button class = "sign-in-button">Sign In</button> 
+                <button  class = "sign-in-button">Sign In</button> 
             </div>
             <router-link :to="'/signup'" class = "text-link">Sign up!</router-link>
             <div class = "oauth text-oauth">
                 <h1 >Or, you can log in through</h1>
-                <button class = "google-oauth"></button> <br>
+                <button  @click="requestProfileDetails" class = "google-oauth"></button> <br>
                  The Google <a href = "https://policies.google.com/privacy">Privacy Policy </a>and <a href = "https://policies.google.com/terms">Terms of Service</a> apply.
             </div>
             
         </div>
     </section>
 </template>
+<script>
+export default{
+    methods:{
+    async requestProfileDetails()
+        {
+          window.open("http://localhost:8081/auth")
+          
+        }
+    }
+}
+</script>
+
 <style lang = "scss" scoped>
 .login-page{
     height:100vh;
