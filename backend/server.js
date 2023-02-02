@@ -60,7 +60,7 @@ app.get('/get/:nname',async (request,response)=>{
         response.status(500).send('No such notice!')
     }
 })
-
+//Oauth endpoints
 app.get('/auth',(request,response)=>{
     console.log("get request for auth found")
     try {
@@ -95,6 +95,23 @@ app.get(process.env.REDIRECT_URI,async (request,response)=>{
 app.get("/cachedProfile",async (request,response)=>{
     response.send(cached_user);
 })
+
+//login endpoints
+app.get("/login",async (request,response)=>{
+    var sql = `SELECT * from users WHERE username = '${request.body.username}' AND password = '${request.body.password}'`;
+    var foundUser = await make_sql_query(con,sql);
+    console.log(foundUser)
+    if(foundUser[0])
+    {
+        response.send(foundUser)
+    }
+    else
+    {
+        console.log("Hi")
+        response.status(500).send("Username or Password was incorrect");
+    }
+})
+
 app.put('/updateTime',(request,response)=>{
     updatedNotice = new noticeClass.Notice(request.body.noticeName,request.body.dueDate, request.body.priority)
     updatedNotice.setDueClass(dateTime);

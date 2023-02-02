@@ -7,9 +7,9 @@ async getProfileData()
     console.log("Result from axios is")
     return res.data
   },
-async postUsernamePassword(loginInfo)
+async verifyUsernamePassword(loginInfo)
 {
-  let res = await axios.post("http://localhost:8081/login",loginInfo)
-  return res;
+  let res = await axios.get("http://localhost:8081/login",loginInfo)
+  return res.data;
 }
 }

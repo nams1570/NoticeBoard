@@ -7,9 +7,10 @@
                 <input :value = "username" @input="onInputUsername" class = "text-input">
                 <h2>Password:</h2>
                 <input :value = "password" @input="onInputPassword" class = "text-input">
+                <h2 class = "error-message">{{ this.errorMessage }}</h2>
             </div>
             <div class = "sign-in">
-                <button  class = "sign-in-button">Sign In</button> 
+                <button @click="loginToWebsite"  class = "sign-in-button">Sign In</button> 
             </div>
             <router-link :to="'/signup'" class = "text-link">Sign up!</router-link>
             <div class = "oauth text-oauth">
@@ -22,11 +23,13 @@
     </section>
 </template>
 <script>
+import AuthService from "../services/AuthService.js"
 export default{
     data(){
         return{
             username: "",
-            password: ""
+            password: "",
+            errorMessage:""
         }
     },
     methods:{
@@ -42,6 +45,19 @@ export default{
     async onInputPassword(e)
     {
         this.password = e.target.value;
+    },
+    async loginToWebsite()
+    {
+        var loginObject = {username:this.username,password:this.password};
+        try
+        {
+            await AuthService.verifyUsernamePassword(loginObject);
+        }
+        catch
+        {
+            this.errorMessage = "username or password is incorrect";
+        }
+        console.log(this.errorMessage);
     }
     }
 }
@@ -55,8 +71,12 @@ export default{
     background-size: cover;
     z-index:1;
 }
+.error-message{
+    font-size:x-small;
+    color:red;
+}
 .login-box{
-    height:53%;
+    height:63%;
     width:18%;
     margin-left:40%;
     margin-right:50%;
@@ -70,7 +90,7 @@ export default{
 }
 .username-password{
     margin-left:15%;
-    width:50%;
+    width:57%;
 }
 .sign-in{
     margin-left:30px;
@@ -83,7 +103,7 @@ export default{
     margin-left: 20%;
 }
 .sign-in-button{
-    width:80%;
+    width:84%;
     background-color: rgb(109, 103, 103);
     border:0px;
     cursor:pointer;
