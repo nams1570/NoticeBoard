@@ -4,9 +4,9 @@
                 <button class = "logo"></button>
             <div class = "username-password"> 
                 <h1>Username:</h1>
-                <input class = "text-input">
+                <input :value = "username" @input="onInputUsername" class = "text-input">
                 <h2>Password:</h2>
-                <input class = "text-input">
+                <input :value = "password" @input="onInputPassword" class = "text-input">
             </div>
             <div class = "sign-in">
                 <button  class = "sign-in-button">Sign In</button> 
@@ -23,12 +23,26 @@
 </template>
 <script>
 export default{
+    data(){
+        return{
+            username: "",
+            password: ""
+        }
+    },
     methods:{
     async requestProfileDetails()
         {
           window.open("http://localhost:8081/auth")
           
-        }
+        },
+    async onInputUsername(e)
+    {
+        this.username = e.target.value;
+    },
+    async onInputPassword(e)
+    {
+        this.password = e.target.value;
+    }
     }
 }
 </script>
