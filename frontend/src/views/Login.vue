@@ -52,13 +52,19 @@ export default{
         try
         {
             await AuthService.verifyUsernamePassword(loginObject);
-            this.emitter.emit("successful-login");
+            try{
+            this.emitter.emit("successful-login",{username:loginObject.username});
+            console.log("bingpot")
+            }
+            catch{
+                console.log("error in emit")
+            }
             //this.$emit('successful-login');
         }
         catch(e)
         {
             this.errorMessage = "username or password is incorrect";
-            console.error(e)
+            //console.error(e)
         }
         console.log(this.errorMessage);
     }

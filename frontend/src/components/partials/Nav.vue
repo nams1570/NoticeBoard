@@ -31,8 +31,7 @@
               </a>
             </div>
             <div class = "profile-display" v-else> 
-              <img :src="result?.picture"><br>
-              <strong> {{ result?.name }} </strong>
+              <strong> Welcome, {{ result.username }} </strong>
             </div>
           </div>
         </div>
@@ -45,16 +44,31 @@
       name: 'Nav',
       data(){
         return{
-          result:'',
+          result:{},
           isLoggedIn: false
         }
+      },
+      mounted()
+      {
+        this.emitter.on("successful-login",(loginResult)=>{
+          console.log("Ya did it!");
+          console.log("Hi"+JSON.stringify(loginResult));
+          this.isLoggedIn = true;
+          try 
+          {
+            this.result = loginResult;
+            console.log("login suc")
+          }
+          catch{
+            console.log("error in this.result");
+          }
+        })
       },
       created:async function(){
         //await this.getProfileDetails()
         //console.log("Login det"+JSON.stringify(this.result));
-        this.emitter.on("successful-login",()=>{
-          console.log("Ya did it!");
-        })
+        
+        console.log("Done"+JSON.stringify(this.result));
       },
       methods:{
         async requestProfileDetails()
