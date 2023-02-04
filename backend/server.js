@@ -97,7 +97,8 @@ app.get("/cachedProfile",async (request,response)=>{
 })
 
 //login endpoints
-app.get("/login",async (request,response)=>{
+app.post("/login",async (request,response)=>{
+    console.log(JSON.stringify(request.body))
     var sql = `SELECT * from users WHERE username = '${request.body.username}' AND password = '${request.body.password}'`;
     var foundUser = await make_sql_query(con,sql);
     console.log(foundUser)

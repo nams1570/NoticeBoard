@@ -9,7 +9,7 @@ async getProfileData()
   },
 async verifyUsernamePassword(loginInfo)
 {
-  let res = await axios.get("http://localhost:8081/login",loginInfo)
+  let res = await axios.post("http://localhost:8081/login",loginInfo)
   return res.data;
 }
 }
