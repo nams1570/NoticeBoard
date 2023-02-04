@@ -52,10 +52,13 @@ export default{
         try
         {
             await AuthService.verifyUsernamePassword(loginObject);
+            this.emitter.emit("successful-login");
+            //this.$emit('successful-login');
         }
-        catch
+        catch(e)
         {
             this.errorMessage = "username or password is incorrect";
+            console.error(e)
         }
         console.log(this.errorMessage);
     }

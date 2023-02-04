@@ -50,8 +50,11 @@
         }
       },
       created:async function(){
-        await this.getProfileDetails()
-        console.log("Login det"+JSON.stringify(this.result));
+        //await this.getProfileDetails()
+        //console.log("Login det"+JSON.stringify(this.result));
+        this.emitter.on("successful-login",()=>{
+          console.log("Ya did it!");
+        })
       },
       methods:{
         async requestProfileDetails()
