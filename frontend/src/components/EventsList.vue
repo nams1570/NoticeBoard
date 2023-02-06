@@ -106,9 +106,7 @@
       created:async function(){
         //put request
         await this.getNoticeData();
-        console.log("notices length"+this.notices.length)
         await this.updateAllDueClass();
-        console.log("Banana")
       },
       computed:{
         backlogNotices()
@@ -137,10 +135,8 @@
         {
           try
           {
-            console.log("Hello!"+this.notices.length)
             this.notices.forEach(notice=>
             {
-              console.log("Notice is"+{notice})
               NoticeService.updateDueClass(notice);
             })
           }

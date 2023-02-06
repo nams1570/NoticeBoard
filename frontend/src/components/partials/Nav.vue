@@ -21,13 +21,13 @@
           <router-link to="/" class="navbar-item">Home</router-link>
           <router-link to="/about" class="navbar-item">About</router-link>
           <router-link to="/settings" class="navbar-item">Settings</router-link>
-          <router-link to="/login" class = "navbar-item">Login</router-link>
+
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <div  v-if="isLoggedIn !== true" class="buttons">
-              <a v-on:click="requestProfileDetails" class="button is-dark">
-                <strong>Sign In</strong>
+            <div  v-if="!isLoggedIn" class="buttons">
+              <a @click="requestProfileDetails" class="button is-dark">
+                  <strong>Sign In</strong>
               </a>
             </div>
             <div class = "profile-display" v-else> 
@@ -39,7 +39,6 @@
     </nav>
   </template>
   <script>
-  import AuthService from "../../services/AuthService"
     export default {
       name: 'Nav',
       data(){
@@ -62,34 +61,20 @@
           catch{
             console.log("error in this.result");
           }
+          sessionStorage.setItem("isLoggedIn",true)
+          sessionStorage.setItem("loginUsername",this.result.username)
         })
       },
-      created:async function(){
-        //await this.getProfileDetails()
-        //console.log("Login det"+JSON.stringify(this.result));
-        
-        console.log("Done"+JSON.stringify(this.result));
+      created(){
+        this.result = {username:sessionStorage.getItem("loginUsername")}
+      this.isLoggedIn = sessionStorage.getItem("isLoggedIn")
+      console.log(`Now isLoggedIn in Nav is ${this.isLoggedIn}`)
+      console.log("Result in Nav is "+JSON.stringify(this.result.username))
       },
       methods:{
-        async requestProfileDetails()
+        requestProfileDetails()
         {
-          window.open("http://localhost:8081/auth")
-          
-        },
-        async getProfileDetails()
-        {
-          this.result = await AuthService.getProfileData()
-          console.log("our pre is "+JSON.stringify(this.result))
-          if(JSON.stringify(this.result) != "{}")
-          {
-            console.log("Hoi")
-            this.isLoggedIn = true;
-          }
-          else
-          {
-            console.log("hei")
-            this.isLoggedIn = false;
-          }
+          window.open("http://localhost:8080/login","_self")
         }
       }
     };

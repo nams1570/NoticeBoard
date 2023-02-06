@@ -59,14 +59,13 @@ export default{
             catch{
                 console.log("error in emit")
             }
-            //this.$emit('successful-login');
         }
         catch(e)
         {
             this.errorMessage = "username or password is incorrect";
-            //console.error(e)
         }
         console.log(this.errorMessage);
+        window.open("http://localhost:8080","_self")
     }
     }
 }
