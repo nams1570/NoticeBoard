@@ -6,6 +6,8 @@ const noticeClass = require('./models/notice.js')
 const cors = require('cors');
 const mysql = require('mysql');
 const utils = require('./utils');
+var session = require('express-session');
+
 require('dotenv').config()
 
 //constant declarations
@@ -39,10 +41,18 @@ async function make_sql_query(con,sql)
     })
 }
 
-
+app.use(session({
+    secret: "secret",
+    resave: false ,
+    saveUninitialized: true ,
+}))
 
 app.use(cors());
 app.use(bodyParser.json())
+var authRouter = require('./routes/auth');
+
+app.use('/',authRouter)
+
 app.get('/',async (request,response)=>{
     //console.log("Get request to homepage received.")
     response.status(200).send(await make_sql_query(con,"SELECT * FROM noticeList"));

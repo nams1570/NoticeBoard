@@ -35,8 +35,8 @@ export default{
     methods:{
     async requestProfileDetails()
         {
-          window.open("http://localhost:8081/auth")
-          
+          //window.open("http://localhost:8081/auth")
+          await AuthService.getProfileData();
         },
     async onInputUsername(e)
     {
